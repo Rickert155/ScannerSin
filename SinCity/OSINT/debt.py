@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def search_debts(inn_search):
+def search_debts(inn_search:str):
     params = {'inn':f'{inn_search}'}
     print('Идет поиск по rosdolgi.ru ...\n')
     query = requests.get('https://rosdolgi.ru/nalogi', params=params)
@@ -13,3 +13,5 @@ def search_debts(inn_search):
         except:print(f'Налоговая задолженность по ИНН {inn_search} не найдена')
     else:print(f'Status Code: {query.status_code}\nПроверь правильность введенного ИНН')
 
+if __name__ == '__main__':
+    search_debts(inn_search=input('ИНН: '))

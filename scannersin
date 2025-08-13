@@ -1,0 +1,33 @@
+#!/usr/bin/python3
+from SinCity.colors import BLUE, RESET, RED, GREEN
+from __init__ import __author__, __version__
+
+import textwrap
+
+def menuScanner():
+    menu = f"""\
+    +--------------------------------------------------
+    | Snanner Sin
+    +--------------------------------------------------
+    | Version: \t{__version__}
+    | Author: \t{__author__}
+    +--------------------------------------------------
+    | [+] Сканнер возможножных страниц              [1]
+    | [+] Сканнер поддоменов                        [2]
+    | [+] Проверить задолженность(ИНН)              [3]
+    | [+] Проверить Whois                           [4]
+    +--------------------------------------------------
+    """
+    menu = textwrap.dedent(menu)
+    select_point = input(
+            f'{GREEN}{menu}{RESET}'
+            f'{RED}>>> {RESET}'
+            )
+    print(select_point)
+
+if __name__ == '__main__':
+    try:
+        menuScanner()
+    except KeyboardInterrupt:
+        print(f'{RED}\nBye bye{RESET}')
+

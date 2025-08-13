@@ -15,3 +15,6 @@ def whois(domain:str):
         except Exception as ex:
             print(f'Error: {ex}')
     else:print(f'Response code: {response.status_code}')
+
+if __name__ == '__main__':
+    whois(domain=input("Domain: "))
