@@ -82,7 +82,6 @@ def processing_readme(response):
             f'[{counter_plugin}]\t\tDetected Plugin\n'
             f'Plugin: \t{plugin_name}\n'
             f'Version: \t{plugin_version}\n'
-            f'{divide_line}\n'
             )
     data = {"plugin_name":plugin_name, "plugin_version":plugin_version}
     recording(data=data)
@@ -117,6 +116,7 @@ def processing(domain:str):
 
 def Scanner():
     global DOMAIN
+
     try:
         domain = get_domain()
         DOMAIN, domain_info_json = domain, f'{domain}.json'
@@ -128,4 +128,3 @@ def Scanner():
             except requests.exceptions.ConnectionError as err:print(err)
 
     except KeyboardInterrupt:print('\nExit...')
-

@@ -1,8 +1,14 @@
 #!/usr/bin/python3
 from SinCity.colors import BLUE, RESET, RED, GREEN
+from SinCity.Scanners.scanner_wp_plugin import Scanner
 from __init__ import __author__, __version__
 
 import textwrap
+
+def inDev():
+    """Просто обозначим, что модуль в процессе разработки"""
+    text = f'{RED}Модуль в процессе разработки...{RESET}'
+    print(text) 
 
 def menuScanner():
     menu = f"""\
@@ -14,8 +20,10 @@ def menuScanner():
     +--------------------------------------------------
     | [+] Сканнер возможножных страниц              [1]
     | [+] Сканнер поддоменов                        [2]
-    | [+] Проверить задолженность(ИНН)              [3]
     | [+] Проверить Whois                           [4]
+    |       
+    | [ ] WordPress
+    | [+] Сканнер плагинов                          [5]
     +--------------------------------------------------
     """
     menu = textwrap.dedent(menu)
@@ -23,7 +31,10 @@ def menuScanner():
             f'{GREEN}{menu}{RESET}'
             f'{RED}>>> {RESET}'
             )
-    print(select_point)
+    if int(select_point) == 1:inDev()
+    if int(select_point) == 2:inDev()
+    if int(select_point) == 3:inDev()
+    if int(select_point) == 5:Scanner()
 
 if __name__ == '__main__':
     try:
