@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from SinCity.colors import BLUE, RESET, RED, GREEN
 from SinCity.Scanners.scanner_wp_plugin import Scanner
+from SinCity.Scanners.scan_pages import SearchPages
 from __init__ import __author__, __version__
 
 import textwrap
@@ -18,12 +19,15 @@ def menuScanner():
     | Version: \t{__version__}
     | Author: \t{__author__}
     +--------------------------------------------------
+    | [ ] Первичная разведка
     | [+] Сканнер возможножных страниц              [1]
     | [+] Сканнер поддоменов                        [2]
-    | [+] Проверить Whois                           [4]
     |       
     | [ ] WordPress
-    | [+] Сканнер плагинов                          [5]
+    | [+] Сканнер плагинов                          [3]
+    |
+    | [ ] Other
+    | [+] Определить CMS                            [4]
     +--------------------------------------------------
     """
     menu = textwrap.dedent(menu)
@@ -31,10 +35,11 @@ def menuScanner():
             f'{GREEN}{menu}{RESET}'
             f'{RED}>>> {RESET}'
             )
-    if int(select_point) == 1:inDev()
-    if int(select_point) == 2:inDev()
-    if int(select_point) == 3:inDev()
-    if int(select_point) == 5:Scanner()
+    if int(select_point) == 1:SearchPages()
+    elif int(select_point) == 2:inDev()
+    elif int(select_point) == 3:Scanner()
+    elif int(select_point) == 4:inDev()
+    else:print(f'{RED}Такого пункта меню нет!{RESET}')
 
 if __name__ == '__main__':
     try:

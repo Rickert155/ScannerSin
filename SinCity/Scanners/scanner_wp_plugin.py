@@ -1,29 +1,18 @@
 import requests, json, os, time
+from SinCity.colors import GREEN, RESET
 from SinCity.Agent.header import header
+from SinCity.Scanners.miniTools import get_domain
 
 DOMAIN = None
 
-def get_domain():
-    domain = input("Domain: ")
-    if '//' in domain:domain = domain.split('//')[1]
-    if '/' in domain:domain = domain.split('/')[0]
-    if 'www.' in domain:domain = domain.split('www.')[1]
-    if '@' in domain:domain = domain.split('@')[1]
-    if '.' not in domain:domain = None
-    try:
-        a, b = domain.split('.')
-        if len(a) <= 1 and len(b) <= 1:domain = None
-    except:domain = None
-
-    return domain
-
 def plugins(file_name:str=None):
-    list_plugins = []
+    list_plugins = set()
     
     try:
         with open(file_name, 'r') as file:
             for plugin in file.readlines():
-                if plugin not in list_plugins:list_plugins+=[plugin.strip()]
+                if plugin not in list_plugins:
+                    list_plugins.add(plugin.strip())
    
         return list_plugins
     
@@ -58,7 +47,7 @@ def recording(data:dict):
 def processing_readme(response):
     global counter_plugin
     global LIST_PLUGINS
-    divide_line = '*'*40
+    divide_line = f'{GREEN}-{RESET}'*50
     
     pattern_line_tag = 'Stable tag: '
 
@@ -74,16 +63,21 @@ def processing_readme(response):
     if '=' in plugin_name:plugin_name = plugin_name.replace('=', '')
     if '#' in plugin_name:plugin_name = plugin_name.replace('#', '')
     plugin_name = plugin_name.strip()
-    if pattern_line_tag in plugin_version:
+    if plugin_version != None and pattern_line_tag in plugin_version:
         plugin_version = plugin_version.split(pattern_line_tag)[1]
-    plugin_version = plugin_version.strip()
+    if plugin_version != None:plugin_version = plugin_version.strip()
+    if plugin_version == None:plugin_version = 'Unknown'
     print(
-            f'{divide_line}\n'
-            f'[{counter_plugin}]\t\tDetected Plugin\n'
-            f'Plugin: \t{plugin_name}\n'
-            f'Version: \t{plugin_version}\n'
+            f'+{divide_line}\n'
+            f'| [{counter_plugin}]\t\tDetected Plugin\n'
+            f'| {GREEN}Plugin: \t{plugin_name}\n'
+            f'| Version: \t{plugin_version}{RESET}'
             )
-    data = {"plugin_name":plugin_name, "plugin_version":plugin_version}
+    data = {
+            "number":counter_plugin, 
+            "plugin_name":plugin_name, 
+            "plugin_version":plugin_version
+            }
     recording(data=data)
 
 def scan_url(address:str):

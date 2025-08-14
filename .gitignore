@@ -2,3 +2,5 @@
 venv/
 archive/
 *.json
+plugins.txt
+pages.txt
