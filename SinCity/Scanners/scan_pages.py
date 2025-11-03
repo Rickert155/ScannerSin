@@ -2,6 +2,7 @@ from SinCity.colors import RED, RESET, GREEN
 from SinCity.Agent.header import header
 from SinCity.Scanners.miniTools import get_domain, selectFile
 import requests
+import urllib3
 
 def ListPages(doc:str):
     list_pages = set()
@@ -14,7 +15,7 @@ def ListPages(doc:str):
     return list_pages
 
 def iterationPage(domain:str, doc:str):
-    start_url = f'http://{domain}'
+    start_url = f'https://{domain}'
     
     list_pages = ListPages(doc=doc)
 
@@ -27,7 +28,8 @@ def iterationPage(domain:str, doc:str):
         url = f'{start_url}/{page}'
         head = header()
         try:
-            response = requests.get(url, headers=head)
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+            response = requests.get(url, headers=head, verify=False)
             status = response.status_code
             if status == 200:
                 number_page+=1
